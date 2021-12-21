@@ -2,13 +2,8 @@ package com.suho.demo.githubsearchsample.remote
 
 import com.suho.demo.githubsearchsample.remote.dto.GithubSearchResponse
 import com.suho.demo.githubsearchsample.remote.response.ApiResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import retrofit2.Response
 import java.io.IOException
 

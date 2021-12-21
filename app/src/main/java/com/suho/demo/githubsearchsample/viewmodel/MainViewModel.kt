@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suho.demo.githubsearchsample.data.common.Resource
-import com.suho.demo.githubsearchsample.data.common.Status
 import com.suho.demo.githubsearchsample.data.model.GithubRepo
 import com.suho.demo.githubsearchsample.data.repository.SearchRepository
 import kotlinx.coroutines.flow.collect
@@ -23,19 +22,12 @@ class MainViewModel : ViewModel() {
     val searchResult: LiveData<Resource<List<GithubRepo>>>
         get() = _searchResult
 
-    private val _reposData: MutableLiveData<List<GithubRepo>> by lazy {
-        MutableLiveData<List<GithubRepo>>()
-    }
-    val reposData: LiveData<List<GithubRepo>>
-        get() = _reposData
+    var query: String = ""
 
-    fun searchRepositories(query: String) {
+    fun searchRepositories() {
         viewModelScope.launch {
             SearchRepository.getSearchResult(query).collect {
                 _searchResult.postValue(it)
-                if (it.status == Status.SUCCESS) {
-                    _reposData.postValue(it.data)
-                }
             }
         }
     }

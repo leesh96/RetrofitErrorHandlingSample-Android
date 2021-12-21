@@ -1,7 +1,6 @@
 package com.suho.demo.githubsearchsample.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -32,17 +31,20 @@ class MainActivity : AppCompatActivity() {
         binding.viewModel = viewModel
         setContentView(binding.root)
 
-        binding.btnSearch.setOnClickListener {
-            viewModel.searchRepositories(binding.etQuery.text.toString())
-        }
+        initRecyclerView()
+        setObserver()
+    }
 
+    private fun initRecyclerView() {
         binding.rcvRepos.apply {
             mainAdapter = MainAdapter()
             layoutManager = LinearLayoutManager(this@MainActivity)
             setHasFixedSize(true)
             adapter = mainAdapter
         }
+    }
 
+    private fun setObserver() {
         viewModel.searchResult.observe(this) {
             when (it.status) {
                 Status.LOADING -> {
@@ -50,7 +52,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 Status.SUCCESS -> {
                     binding.progress.visibility = View.GONE
-                    Log.d(TAG, it.data.toString())
                 }
                 Status.ERROR -> {
                     binding.progress.visibility = View.GONE

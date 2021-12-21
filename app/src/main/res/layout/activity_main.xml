@@ -6,8 +6,16 @@
     <data>
 
         <variable
+            name="view"
+            type="com.suho.demo.githubsearchsample.view.MainActivity" />
+
+        <variable
             name="viewModel"
             type="com.suho.demo.githubsearchsample.viewmodel.MainViewModel" />
+
+        <variable
+            name="status"
+            type="com.suho.demo.githubsearchsample.data.common.Status" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,6 +29,7 @@
             android:layout_height="wrap_content"
             android:hint="검색어를 입력하세요."
             android:layout_marginEnd="8dp"
+            android:text="@={viewModel.query}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_search"
             app:layout_constraintBottom_toTopOf="@id/rcv_repos"
@@ -31,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:text="검색"
+            android:onClick="@{() -> viewModel.searchRepositories()}"
             app:layout_constraintTop_toTopOf="@id/et_query"
             app:layout_constraintBottom_toBottomOf="@id/et_query"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -40,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="16dp"
-            app:repos="@{viewModel.reposData}"
+            app:repos="@{viewModel.searchResult.data}"
             app:layout_constraintTop_toBottomOf="@id/et_query"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +60,7 @@
             android:id="@+id/progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="@{viewModel.searchResult.status == status.LOADING}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/rcv_repos"
