@@ -11,7 +11,7 @@ data class RepositoryDetailResponse(
     val name: String,
 
     @SerializedName("stargazers_count")
-    val starts: Int,
+    val stars: Int,
 
     @SerializedName("watchers_count")
     val watchers: Int,

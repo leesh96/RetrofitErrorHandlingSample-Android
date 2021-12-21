@@ -1,5 +1,8 @@
 package com.suho.demo.githubsearchsample.data.common
 
+/*
+UI에 상태 표시를 위한 래퍼 클래스 입니다.
+ */
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
 
     companion object {

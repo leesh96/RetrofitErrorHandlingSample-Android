@@ -1,5 +1,8 @@
 package com.suho.demo.githubsearchsample.data.model
 
+/*
+View에 표시될 모델입니다.
+ */
 data class GithubRepo(
 
     val id: Int,
