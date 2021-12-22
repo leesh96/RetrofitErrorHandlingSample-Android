@@ -52,3 +52,9 @@ Remote : API 호출로 Github Open API의 데이터를 가져오기 위한 클�
 - 사용자 이벤트가 의존성을 가진 방향으로 가고 데이터는 그 반대로 올라옴 (공식문서의 UDF 패턴과 동일하다고 생각함)
 - 아키텍처와 코드에는 정답이 없으니까 공부하고 가다듬기. -> 아키텍처 적용한 샘플 TODO앱 만들어보기
 
+## Reference
+
+[https://developer.android.com/kotlin/flow](https://developer.android.com/kotlin/flow)
+[https://proandroiddev.com/create-retrofit-calladapter-for-coroutines-to-handle-response-as-states-c102440de37a](https://proandroiddev.com/create-retrofit-calladapter-for-coroutines-to-handle-response-as-states-c102440de37a)
+[https://proandroiddev.com/create-retrofit-calladapter-for-coroutines-to-handle-response-as-states-c102440de37a](https://proandroiddev.com/create-retrofit-calladapter-for-coroutines-to-handle-response-as-states-c102440de37a)
+[https://levelup.gitconnected.com/coroutines-retrofit-and-a-nice-way-to-handle-responses-769e013ee6ef](https://levelup.gitconnected.com/coroutines-retrofit-and-a-nice-way-to-handle-responses-769e013ee6ef)
