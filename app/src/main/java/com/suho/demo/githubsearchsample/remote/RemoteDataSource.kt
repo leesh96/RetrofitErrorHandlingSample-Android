@@ -14,7 +14,7 @@ object RemoteDataSource {
 
     private val mClient = NetworkModule.retrofitClient
 
-    suspend fun searchRepositories(query: String): Flow<ApiResponse<GithubSearchResponse>> = flow {
+    /*suspend fun searchRepositories(query: String): Flow<ApiResponse<GithubSearchResponse>> = flow {
         val response: Response<GithubSearchResponse>
         try {
             response = mClient.searchRepositories(query)
@@ -27,5 +27,5 @@ object RemoteDataSource {
             e.printStackTrace()
             emit(ApiResponse.Error(e.toString()))
         }
-    }
+    }*/
 }

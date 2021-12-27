@@ -2,8 +2,10 @@ package com.suho.demo.githubsearchsample.data.repository
 
 import com.suho.demo.githubsearchsample.data.common.Resource
 import com.suho.demo.githubsearchsample.data.model.GithubRepo
+import com.suho.demo.githubsearchsample.remote.NetworkModule
 import com.suho.demo.githubsearchsample.remote.RemoteDataSource
 import com.suho.demo.githubsearchsample.remote.response.ApiResponse
+import com.suho.demo.githubsearchsample.remote.response.safeApiCall
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
@@ -14,28 +16,24 @@ import kotlinx.coroutines.flow.flow
  */
 object SearchRepository {
 
+    private val mClient = NetworkModule.retrofitClient
+
     suspend fun getSearchResult(query: String): Flow<Resource<List<GithubRepo>>> = flow {
         emit(Resource.loading(null))
-        RemoteDataSource.searchRepositories(query).collect {
-            when(it) {
-                is ApiResponse.Success -> {
-                    emit(Resource.success(it.data?.items?.map { data ->
-                        GithubRepo(
-                            id = data.id,
-                            name = data.name,
-                            ownerNickname = data.owner.nickname,
-                            ownerAvatar = data.owner.avatar,
-                            stars = data.stars,
-                            forks = data.forks,
-                            issues = data.issues,
-                            watchers = data.watchers
-                        )
-                    }))
-                }
-                is ApiResponse.Error -> {
-                    emit(Resource.error(it.message ?: "", null))
-                }
-            }
+        when (val response = safeApiCall { mClient.searchRepositories(query) }) {
+            is ApiResponse.Success -> emit(Resource.success(response.data?.items?.map {
+                GithubRepo(
+                    id = it.id,
+                    name = it.name,
+                    ownerNickname = it.owner.nickname,
+                    ownerAvatar = it.owner.avatar,
+                    stars = it.stars,
+                    forks = it.forks,
+                    issues = it.issues,
+                    watchers = it.watchers
+                )
+            }))
+            is ApiResponse.Error -> emit(Resource.error(response.message, null))
         }
     }
 }
