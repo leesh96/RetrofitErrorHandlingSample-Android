@@ -52,11 +52,21 @@ Remote : API 호출로 Github Open API의 데이터를 가져오기 위한 클�
 - 사용자 이벤트가 의존성을 가진 방향으로 가고 데이터는 그 반대로 올라옴 (공식문서의 UDF 패턴과 동일하다고 생각함)
 - 아키텍처와 코드에는 정답이 없으니까 공부하고 가다듬기. -> 아키텍처 적용한 샘플 TODO앱 만들어보기
 
+## Update
+
+- 네트워크 응답의 상태와 UI의 상태는 엄연히 다르다고 생각되어 그대로 두기로함.
+- 네트워크 응답을 데이터 흐름이라고 볼 수 있는 Flow로 관리할 필요가 없다. -> API 호출 함수가 상태를 포함한 응답을 return 해주도록 하면 된다. Flow를 이중으로 쓸 필요가 없었음.
+- 실제로 레트로핏은 코루틴과 함께 suspend 키워드를 붙여 사용하면 Response\<T\> 또는 dto 타입으로 반환값을 받을 수 있다. -> 레트로피 내부적으로 처리 (공부할 것)
+- 네트워크 응답을 general하게 핸들링 하는 방법을 찾아보니 2가지 방법이 존재
+  1. custom call adapter를 작성하여 핸들링하는 방식 [링크](https://proandroiddev.com/create-retrofit-calladapter-for-coroutines-to-handle-response-as-states-c102440de37a)
+  2. Response\<T\> 타입의 응답을 처리해주는 공용함수를 사용 [링크](https://landroid.tistory.com/2)
+- 두가지 방법모두 ApiResponse라는 래퍼 클래스로 네트워크 응답 상태를 관리, 방법의 차이
+- 1번 방법은 example-01 브랜치에, 2번 방법은 example-02 브랜치에 따라 구현 해봤음
+- 코드 분석, 공부해서 아키텍처 공부와 함께 응용해서 적용할 수 있을 것 같다. (ex. http 응답 코드별 사용자 에러 알림 구현이라든지, local data source와 함께 사용하는 방법이라든지..)
+  
 ## Reference
 
 [https://developer.android.com/kotlin/flow](https://developer.android.com/kotlin/flow)
-
-[https://proandroiddev.com/create-retrofit-calladapter-for-coroutines-to-handle-response-as-states-c102440de37a](https://proandroiddev.com/create-retrofit-calladapter-for-coroutines-to-handle-response-as-states-c102440de37a)
 
 [https://levelup.gitconnected.com/android-basic-app-using-mvvm-hilt-coroutines-flow-retrofit-and-coil-433763542ee0](https://levelup.gitconnected.com/android-basic-app-using-mvvm-hilt-coroutines-flow-retrofit-and-coil-433763542ee0)
 
